@@ -75,7 +75,7 @@ output = {
 
 try:
     with open('model.geo.json', 'w') as f:
-        json.dump(output, f)
+        json.dump(output, f, indent=4)
 except OSError:
     print("Could not save JSON file.")
     exit()
