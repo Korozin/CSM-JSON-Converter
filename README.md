@@ -55,13 +55,13 @@ NonsenseText
 
 and it would still get properly converterted, and most likely read in PCK Studio as well.
 
-Basically all the program is doing is every 10 lines or do it iterates an entry using an incremented value, and applies those values to a list like so.
+Basically all the program is doing is every 10 lines or so, it will iterate an entry using an incremented value, and applies those values to a list like so.
 
 ```python
 ['BODY', 'PckStudio.generateModel+ModelPart', '-2', '-3', '2', '1', '1', '1', '0', '0']
 ```
 
-It reads the bone typing from the first index in the entry, and matches it against a dictionary for proper naming. Then it skips the entry text, and applies the numbers in the correct order to the cube's JSON data, and then it uses the next separator after that to signal that it's time to increment again to a new entry, then rinse and repeat until the file is empty.
+It reads the bone typing from the first index in the entry, and matches it against a dictionary for proper naming. Then it skips the entry text, and applies the numbers in the correct order to the cube's JSON data, and then it uses the next separator after that to signal that it's time to increment again to a new entry, then rinse and repeat until there's nothing left in the file to convert.
 
 If there are any errors in the conversion process, the program will notify you and then proceed to exit.
 
