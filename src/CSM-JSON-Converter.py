@@ -9,8 +9,14 @@ VISIBLE_BOUNDS_WIDTH = 2
 VISIBLE_BOUNDS_HEIGHT = 4
 VISIBLE_BOUNDS_OFFSET = [0, 1, 0]
 
+def remove_quotes(string):
+    string = string.rstrip()
+    if string.startswith(('\'', '"')) and string.endswith(('\'', '"')):
+        return string[1:-1]
+    return string
+
 try:
-    csm_path = Path(input("Path to CSM File: "))
+    csm_path = Path(remove_quotes(input("Path to CSM File: ")))
     with csm_path.open("r") as f:
         input_str = f.read()
 except FileNotFoundError:
