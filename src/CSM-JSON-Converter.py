@@ -1,5 +1,4 @@
-import json
-from pathlib import Path
+import os, json, pathlib
 
 BONE_NAMES = {'HEAD': 'Head', 'BODY': 'Body', 'ARM0': 'RightArm', 'ARM1': 'LeftArm', 'LEG0': 'RightLeg', 'LEG1': 'LeftLeg'}
 BONE_KEYS = list(BONE_NAMES.keys())
@@ -15,10 +14,16 @@ def remove_quotes(string):
         return string[1:-1]
     return string
 
+def remove_empty_lines(input_string):
+    lines = input_string.split('\n')
+    non_empty_lines = [line for line in lines if line.strip()]
+    return '\n'.join(non_empty_lines)
+
 try:
-    csm_path = Path(remove_quotes(input("Path to CSM File: ")))
+    csm_path = pathlib.Path(remove_quotes(input("Path to CSM File: ")))
+    csm_name = os.path.basename(csm_path)
     with csm_path.open("r") as f:
-        input_str = f.read()
+        input_str = remove_empty_lines(f.read())
 except FileNotFoundError:
     print(f"{csm_path} does not exist.")
     exit()
@@ -80,10 +85,12 @@ output = {
 }
 
 try:
-    with open('model.geo.json', 'w') as f:
+    json_name = f'{csm_name}.json'
+    with open(json_name, 'w') as f:
         json.dump(output, f, indent=4)
+    json_path = os.path.join(os.path.dirname(os.path.abspath(json_name)), json_name)
 except OSError:
     print("Could not save JSON file.")
     exit()
 
-print("JSON Saved to 'model.geo.json'")
+print(f"JSON Saved to '{json_path}'")
